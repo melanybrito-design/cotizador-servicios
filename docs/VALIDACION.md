@@ -12,6 +12,8 @@ Comprobaciones ejecutadas el 26 de septiembre de 2026 (hora de Ecuador):
 
 ## Límites de esta validación
 
-No se ha contratado ni probado una base remota, un despliegue Vercel, envíos por correo, pagos o firmas electrónicas. El servidor remoto necesita su propia prueba de tiempo de generación de PDF y límites de transacción. Tampoco se ha realizado todavía el piloto comercial con cotizaciones reales ni medido el objetivo de menos de dos minutos.
+La preparación para Vercel volvió a superar las 13 pruebas unitarias, 14 comprobaciones de integración, compilación de producción, TypeScript y formato. Se añadió compatibilidad con las variables de la integración nativa Turso y exclusión explícita de datos privados en el despliegue. Se creó un respaldo privado de la base local antes de migrar.
+
+El proyecto está creado en Vercel, pero la base remota espera la aceptación de términos de Turso por parte de la titular. Todavía no se ha probado el despliegue en línea. El servidor remoto necesita su propia prueba de tiempo de generación de PDF y límites de transacción. No se han implementado envíos por correo, pagos o firmas electrónicas. Tampoco se ha medido el objetivo comercial de menos de dos minutos.
 
 La identidad comercial, contacto, impuestos, horas del catálogo y condiciones deben revisarse en el panel antes de emitir una proforma real. El programa impide emitir si faltan datos mínimos o la confirmación de impuestos.

@@ -5,14 +5,21 @@ let client: Client | undefined;
 let ready: Promise<void> | undefined;
 export async function db() {
   if (!client) {
-    const url = process.env.DATABASE_URL || "file:data/cotizador.db";
+    const url =
+      process.env.DATABASE_URL ||
+      process.env.TURSO_DATABASE_URL ||
+      "file:data/cotizador.db";
     if (process.env.VERCEL && url.startsWith("file:"))
       throw new Error(
         "Configura una base de datos persistente remota antes de desplegar.",
       );
     if (url === "file:data/cotizador.db")
       mkdirSync("data", { recursive: true });
-    client = createClient({ url, authToken: process.env.DATABASE_AUTH_TOKEN });
+    client = createClient({
+      url,
+      authToken:
+        process.env.DATABASE_AUTH_TOKEN || process.env.TURSO_AUTH_TOKEN,
+    });
   }
   ready ??= initialize(client).catch((e) => {
     ready = undefined;

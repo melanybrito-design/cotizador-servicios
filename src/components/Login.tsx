@@ -82,8 +82,8 @@ export default function Login({ configured }: { configured: boolean }) {
           </button>
         </form>
         <p className="fine">
-          Acceso exclusivo de administración. En la instalación local, consulta
-          tu clave en el archivo privado .env.local.
+          Acceso exclusivo de administración. Usa tu clave privada para entrar a
+          tu espacio de trabajo.
         </p>
         <a className="text-link" href="/solicitar">
           ¿Buscas una solución para tu empresa? Solicítala aquí →

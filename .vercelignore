@@ -1,0 +1,6 @@
+data/
+output/
+tmp/
+.env*
+.playwright-cli/
+*.tsbuildinfo

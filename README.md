@@ -79,15 +79,19 @@ npm run test:integration
 
 Las pruebas de integración arrancan temporalmente en el puerto 3054, usan otra base de datos y credenciales ficticias, generan PDF de ejemplo en `output/pdf` y eliminan la base de prueba al terminar. Se verifican control de acceso, solicitudes idempotentes, edición concurrente, emisión y conservación de versiones.
 
-## Publicación futura en Vercel
+## Publicación en Vercel
 
-Esta versión incluye el código necesario, pero **no ha provisionado una base de datos remota ni ha publicado el sitio**. Antes de compartir el formulario:
+El proyecto `cotizador-servicios` está creado en Vercel. La activación de la base remota está pendiente de que la titular acepte los términos de Turso Cloud en Vercel. La aplicación todavía no está publicada para uso en línea. La clave de administración y el secreto de sesión ya están configurados como secretos de producción.
 
-1. Crea una base libSQL remota en un proveedor compatible. Confirma su presupuesto y política de respaldos.
-2. Importa el repositorio en Vercel como Next.js y configura `DATABASE_URL` (`libsql://…`), `DATABASE_AUTH_TOKEN`, `ADMIN_PASSWORD`, `SESSION_SECRET` (32 caracteres o más) y `APP_URL` (origen HTTPS exacto, sin ruta ni barra final). Variables privadas, sin prefijo `NEXT_PUBLIC_`.
+Pasos para completar la publicación:
+
+1. Activa Turso Cloud desde Vercel, plan **Starter ($0/mes)**, región `iad1`. Conecta únicamente el entorno de producción. La integración proporciona `TURSO_DATABASE_URL` y `TURSO_AUTH_TOKEN`; el servidor admite estas variables nativas. También admite `DATABASE_URL` y `DATABASE_AUTH_TOKEN`, que tienen prioridad. No copies la URL `file:` local al entorno de Vercel.
+2. Antes de publicar, respalda e importa los datos locales a la base remota vacía, conservando configuraciones, cotizaciones, solicitudes, folios y PDF. Comprueba recuentos y hashes. Configura `APP_URL` con el origen HTTPS definitivo, sin ruta ni barra final. Todas las variables de acceso son privadas, sin prefijo `NEXT_PUBLIC_`.
 3. Nunca uses SQLite local en Vercel: el sistema lo rechaza porque el almacenamiento efímero no sirve para conservar solicitudes. Tampoco uses GitHub Pages: el proyecto requiere servidor.
 4. Verifica límites de memoria/duración y tamaño de BLOB del proveedor con tus proformas reales. El PDF se genera dentro de la transacción de emisión para no dejar documentos parcialmente emitidos; una transacción remota que expire devuelve un error sin emitir.
 5. Publica y prueba acceso, formulario y PDF con datos ficticios. Comprueba correo/teléfono, condiciones y privacidad antes de usar clientes reales.
+
+`.vercelignore` excluye bases locales, respaldos, documentos de prueba y archivos `.env` de las cargas de despliegue. No se deben subir a GitHub ni incluirlos en el paquete de la aplicación. La publicación por CLI funciona independientemente de la integración GitHub; los despliegues automáticos por cambios en el repositorio requieren vincular la cuenta GitHub en Vercel.
 
 El código limita por IP cuando está detrás de Vercel usando su cabecera de IP. En un servidor propio el límite es global; adapta una cabecera confiable de tu proxy antes de admitir tráfico externo. El acceso del panel es para una única administradora; no es un portal multiusuario de clientes.
 
